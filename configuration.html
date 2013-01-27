@@ -1,0 +1,467 @@
+---
+layout: default
+title: "Documentation - Configuration"
+---
+<h2>Configuration guide</h2>
+
+<p>While I think the config file itself should be very self-explanatory, some settings might require some more explanation.</p>
+<p>Since the configuration is just a big JSON object in a JavaScript file, the configuration can be defined in many more ways than just what the example looks like. The option names are the "path" in the object structure, e.g. the path "<em>channels[i].name</em>" could describe the container of "<em>#foo</em>" in the following structure:</p>
+<code>var config = { channels: [ { name: "#foo" } ] };</code>
+
+
+<a name="toc"></a>
+<h3 class="toc-target">Table of contents</h3>
+<p>Convenient fast access high-speed lift to the section you're looking for.</p>
+<ul class="toc">
+			<li><a href="/configuration.html#channels[i].name" data-target="channels[i].name">channels[i].name</a></li>
+			<li><a href="/configuration.html#channels[i].theme" data-target="channels[i].theme">channels[i].theme</a></li>
+			<li><a href="/configuration.html#channels[i].destination" data-target="channels[i].destination">channels[i].destination</a></li>
+			<li><a href="/configuration.html#channels[i].logFormat" data-target="channels[i].logFormat">channels[i].logFormat</a></li>
+			<li><a href="/configuration.html#channels[i].logEncoding" data-target="channels[i].logEncoding">channels[i].logEncoding</a></li>
+			<li><a href="/configuration.html#channels[i].logTimezone" data-target="channels[i].logTimezone">channels[i].logTimezone</a></li>
+			<li><a href="/configuration.html#channels[i].logPath" data-target="channels[i].logPath">channels[i].logPath</a></li>
+			<li><a href="/configuration.html#channels[i].logFileFilter" data-target="channels[i].logFileFilter">channels[i].logFileFilter</a></li>
+			<li><a href="/configuration.html#channels[i].recursive" data-target="channels[i].recursive">channels[i].recursive</a></li>
+			<li><a href="/configuration.html#channels[i].maxLogFiles" data-target="channels[i].maxLogFiles">channels[i].maxLogFiles</a></li>
+			<li><a href="/configuration.html#channels[i].statsTimezone" data-target="channels[i].statsTimezone">channels[i].statsTimezone</a></li>
+			<li><a href="/configuration.html#channels[i].statsTimezoneText" data-target="channels[i].statsTimezoneText">channels[i].statsTimezoneText</a></li>
+			<li><a href="/configuration.html#channels[i].widgets" data-target="channels[i].widgets">channels[i].widgets</a></li>
+			<li><a href="/configuration.html#channels[i].customHeadHtml" data-target="channels[i].customHeadHtml">channels[i].customHeadHtml</a></li>
+			<li><a href="/configuration.html#channels[i].soloLength" data-target="channels[i].soloLength">channels[i].soloLength</a></li>
+			<li><a href="/configuration.html#channels[i].wordMinLength" data-target="channels[i].wordMinLength">channels[i].wordMinLength</a></li>
+			<li><a href="/configuration.html#channels[i].ignoreWords" data-target="channels[i].ignoreWords">channels[i].ignoreWords</a></li>
+			<li><a href="/configuration.html#channels[i].foulWords" data-target="channels[i].foulWords">channels[i].foulWords</a></li>
+			<li><a href="/configuration.html#channels[i].aggressiveWords" data-target="channels[i].aggressiveWords">channels[i].aggressiveWords</a></li>
+			<li><a href="/configuration.html#channels[i].happySmileys" data-target="channels[i].happySmileys">channels[i].happySmileys</a></li>
+			<li><a href="/configuration.html#channels[i].unhappySmileys" data-target="channels[i].unhappySmileys">channels[i].unhappySmileys</a></li>
+			<li><a href="/configuration.html#channels[i].userConfig" data-target="channels[i].userConfig">channels[i].userConfig</a></li>
+			<li><a href="/configuration.html#log" data-target="log">log</a></li>
+	</ul>
+
+	<a name="channels[i].name"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].name"><h3>channels[i].name</h3></a>
+		<p><p>
+	It's just a name, nothing more. Pick anything. For example, if your channel is called "<em>#MyChannel</em>" and it's in the IRC network "<em>MyNetwork</em>", you could, for example, name it "<em>#MyChannel @ MyNetwork</em>"
+</p>
+<code>var config = { channels: [ { name: "#MyChannel @ MyNetwork" } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].theme"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].theme"><h3>channels[i].theme</h3></a>
+		<p><p>
+	<strong>This setting is case sensitive.</strong>
+</p>
+<p>
+	This changes how the generated statistics look like. Currently there's only one option, "<em>default</em>". If you create more, or if one day the package comes with more, you can insert the name of the theme folder under "<em>themes/</em>" here. For example, if in the JSIS installation directory you ran the command "<em>ls themes</em>" and got the result:
+</p>
+<code>$ ls themes
+default cooltheme</code>
+<p>
+	... you could use "default" or "cooltheme" as the option.
+</p>
+<code>var config = { channels: [ { theme: "cooltheme" } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].destination"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].destination"><h3>channels[i].destination</h3></a>
+		<p><p>
+	<strong>This setting is case sensitive.</strong>
+</p>
+<p>
+	The destination directory you want to put the generated HTML, CSS, and JavaScript in. If you're running JSIS on the server hosting the statistics, you probably want this to be under your web root directory. E.g., if your web root is <em>/var/www/html/</em> and you want your stats to be accessible under <em>http://mydomain/stats/</em> ... you could try setting this as "<em>/var/www/html/stats/</em>".
+	<code>var config = { channels: [ { theme: "/var/www/html/stats/" } ] };</code>
+	<strong>NOTE:</strong> I will not help you to publish your generated stats if you run into issues.
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].logFormat"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].logFormat"><h3>channels[i].logFormat</h3></a>
+		<p><p>
+	<strong>This setting is case sensitive.</strong>
+</p>
+<p>
+	The format your log files are in, or really the name of the class that will do the parsing. The valid values can be figured out by executing "<em>ls classes/LogReaders/</em>" in your JSIS installation directory. For example, if you got the result:
+</p>
+<code>$ ls classes/LogReaders/
+eggdrop.js irssi.js</code>
+<p>
+	... the valid values would be "<em>eggdrop</em>" and "<em>irssi</em>", which obviously are for parsing logs from <a href="http://www.eggheads.org/">Eggdrop</a> and <a href="http://irssi.org/">Irssi</a>.
+</p>
+<p>
+	For example, if your log files are from an Eggdrop bot, you'll want to enter "<em>eggdrop</em>", as in:
+	<code>var config = { channels: [ { logFormat: "eggdrop" } ] };</code>
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].logEncoding"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].logEncoding"><h3>channels[i].logEncoding</h3></a>
+		<p><p>
+	<strong>This setting is case sensitive (afaik).</strong>
+</p>
+<p>
+	<strong>Wrong setting can produce broken output.</strong>
+</p>
+<p>
+	If your log files are not in UTF-8, we should really REALLY convert them to UTF-8 using iconv. If this setting is set to anything except "<em>UTF-8</em>", we will put them through an iconv conversion from the encoding entered here to UTF-8, prior to parsing them. <a href="http://www.gnu.org/software/libiconv/">List of iconv supported encodings</a>
+</p>
+<p>
+	You can try and find out what type the file is with the "<em>file</em>" util. E.g. if one of your log files is at <em>/home/lietu/logs/mylog.log</em>, you could run:
+</p>
+<code>$ file -bi /home/lietu/logs/mylog.log
+text/plain; charset=us-ascii</code>
+<p>
+	.. the output then quite clearly says that we should be using the ASCII encoding (in this example, your results might vary).
+</p>
+<p>
+	For example if your log files are using ASCII encoding, you can use:
+</p>
+<code>var config = { channels: [ { logEncoding: "ASCII" } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].logTimezone"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].logTimezone"><h3>channels[i].logTimezone</h3></a>
+		<p><p>
+	The timezone your log files are in. You really only need this in case your log files are on a different timezone than the server you're generating the logs on.
+</p>
+<p>
+	Format is +|-HH:MM as offset from GMT. Set to null to use server timezone, which is also the default.
+</p>
+<p>
+	E.g. +03:00 or -07:00.
+</p>
+
+<code>var config = { channels: [ { logTimezone: "+03:00" } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].logPath"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].logPath"><h3>channels[i].logPath</h3></a>
+		<p><p>
+	<strong>This setting is case sensitive.</strong>
+</p>
+<p>
+	The location your log files are in ... for safety, you should really use a full path here. For example, if your log files are stored in "<em>/home/lietu/logs/</em>", you should enter that, e.g.:
+	<code>var config = { channels: [ { logPath: "/home/lietu/logs/" } ] };</code>
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].logFileFilter"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].logFileFilter"><h3>channels[i].logFileFilter</h3></a>
+		<p><p>
+	If your logPath contains logs for many channels, you can use this variable to define a regular expression that will be used to match only the files you want to include in this channel's stats. The regular expression will be matched against the full path to the file, and if you need it to be case insensitive, you will have to make it case insensitive yourself (/foo/i).
+</p>
+<p>
+	... for help with regular expressions, check:
+	<ul>
+		<li><a href="http://www.visibone.com/regular-expressions/">http://www.visibone.com/regular-expressions/</a></li>
+		<li><a href="http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/">http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/</a></li>
+	</ul>
+</p>
+<p>
+	For example to match only files that start with "mychannel.log" in a case insensitive manner, you could use:
+</p>
+<code>var config = { channels: [ { logFileFilter: /\/mychannel.log[^/]*/i } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].recursive"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].recursive"><h3>channels[i].recursive</h3></a>
+		<p><p>
+	If the logPath should be parsed recursively. That is, if we should look in subdirectories and subdirectories of subdirectories (etc.) of the logPath. If your log files are organized in folders by year, or similar, then you might want to enable this setting. There rarely are any side-effects of leaving it on when you don't need to.
+	<code>var config = { channels: [ { recursive: true } ] };</code>
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].maxLogFiles"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].maxLogFiles"><h3>channels[i].maxLogFiles</h3></a>
+		<p><p>
+	If you want to limit the amount of log files to parse, set the limit here. JavaScript has a magic constant called "<em>Infinity</em>" that you can use to parse them all. Good values could be: <em>7</em>, <em>14</em>, <em>30</em>, <em>90</em>, <em>180</em>, <em>365</em>, <em>Infinity</em>
+</p>
+<p>
+	For example to always generate stats for the last two weeks, you could use:
+</p>
+<code>var config = { channels: [ { maxLogFiles: 14 } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].statsTimezone"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].statsTimezone"><h3>channels[i].statsTimezone</h3></a>
+		<p><p>
+	If you want to adjust the stats to be rendered in a different timezone than the server is at, then set to the timezone you want it to be rendered in. If you are going to use this, you probably want to make sure logTimezone is correct.
+</p>
+<p>
+	Format is +|-HH:MM as offset from GMT. Set to null to use server timezone, which is also the default. For GMT, use +00:00.
+</p>
+<p>
+	E.g. +03:00 or -07:00.
+</p>
+	<code>var config = { channels: [ { statsTimezone: '-07:00' } ] };</code>
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].statsTimezoneText"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].statsTimezoneText"><h3>channels[i].statsTimezoneText</h3></a>
+		<p><p>
+	What to show as being the timezone when outputting to the stats. By default it is "GMT+|-HH:MM", e.g. "GMT-07:00", so if you want to replace this with something like "DST", you can set the text to be used instead here.
+</p>
+	<code>var config = { channels: [ { statsTimezoneText: 'GMT (Greenwich Mean Time)' } ] };</code>
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].widgets"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].widgets"><h3>channels[i].widgets</h3></a>
+		<p><p>
+	This setting is for customizing the contents and the order of items on your stats page. If you define this list, the page will only include the widgets listed here, in the order they are listed. You can see the available widgets by running "<em>ls -1d widgets/*/</em>" in your JSIS installation folder.
+</p>
+<p>
+	For example, if the output was:
+</p>
+<code>$ ls -1d widgets/*/
+widgets/BigNumbers/
+widgets/DailyActivity/
+widgets/Example/
+widgets/LatestTopics/
+widgets/MostActiveNicks/
+widgets/MostActiveNicksByHour/
+widgets/MostActiveTimes/
+widgets/MostReferencedNicks/
+widgets/MostReferencedURLs/
+widgets/MostUsedWords/
+widgets/OtherInterestingNumbers/
+widgets/Smileys/
+widgets/UsersWithMostNicknames/</code>
+<p>
+	The valid options would be:<br />
+	<ul>
+		<li>BigNumbers</li>
+		<li>DailyActivity</li>
+		<li>Example (this is an example widget with no real use)</li>
+		<li>LatestTopics</li>
+		<li>MostActiveNicks</li>
+		<li>MostActiveNicksByHour</li>
+		<li>MostActiveTimes</li>
+		<li>MostReferencedNicks</li>
+		<li>MostReferencedURLs</li>
+		<li>MostUsedWords</li>
+		<li>OtherInterestingNumbers</li>
+		<li>Smileys</li>
+		<li>UsersWithMostNicknames</li>
+	</ul>
+</p>
+<p>
+	For example, if you would only want your stats to contain the list of most active nicks, and latest topics, you could use:
+</p>
+<code>var config = { channels: [ { widgets: ['MostActiveNicks', 'LatestTopics'] } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].customHeadHtml"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].customHeadHtml"><h3>channels[i].customHeadHtml</h3></a>
+		<p><p>
+	If you want to easily add your own HTML code to the <head> section of the HTML, you can insert it here. For example, if you want Google Analytics for your stats, just get the HTML code from Google and paste it here. You can do a lot of other things too with it, if you're creative.
+</p>
+<p>
+	For example, to always show an annoying "Welcome to the stats" message for every page load, you could use this (please don't):
+</p>
+<code>var config = { channels: [ { customHeadHtml: '&lt;script type="text/javascript"&gt;alert("Welcome to the stats");&lt;/script&gt;' } ] };</code>
+<p>
+	Please note that if you don't escape the quotes properly, you can easily break the configuration file.
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].soloLength"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].soloLength"><h3>channels[i].soloLength</h3></a>
+		<p><p>
+	If you want to tune how many lines/actions in a row does one one need to say before it's considered "soloing", you can do it with this.
+</p>
+<p>
+	For example, to consider 4 consecutive lines/actions from one person "soloing", you can use:
+</p>
+<code>var config = { channels: [ { soloLength: 4 } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].wordMinLength"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].wordMinLength"><h3>channels[i].wordMinLength</h3></a>
+		<p><p>
+	Minimum length of words to be shown in the "most used words" widget. Easy way to remove all the plain useless words like "and", "or", etc.
+</p>
+<code>var config = { channels: [ { wordMinLength: 4 } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].ignoreWords"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].ignoreWords"><h3>channels[i].ignoreWords</h3></a>
+		<p><p>
+	Space separated list of words to be ignored for the "most used words" widget. If you set this, the defaults will not be used at all. If you want to add words, please contribute to the project instead.
+</p>
+<p>
+	For example, in a Finnish channel you might want to replace the default list with common Finnish pronouns, etc., e.g.:
+</p>
+<code>var config = { channels: [ { foulWords: 'ja ei tai'] } ] };</code>
+<p>
+	You might end up with character set issues with non-ASCII characters. Good luck resolving those, if you bump into any.
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].foulWords"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].foulWords"><h3>channels[i].foulWords</h3></a>
+		<p><p>
+	Space separated list of words to be considered foul. If you set this, the defaults will not be used at all. If you want to add words, please contribute to the project instead.
+</p>
+<p>
+	For example, in a Finnish channel you might want to replace the default list with Finnish foul words, e.g.:
+</p>
+<code>var config = { channels: [ { foulWords: 'paska vittu kyrpä'] } ] };</code>
+<p>
+	You might end up with character set issues with non-ASCII characters. Good luck resolving those, if you bump into any.
+</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].aggressiveWords"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].aggressiveWords"><h3>channels[i].aggressiveWords</h3></a>
+		<p><p>
+	Space separated list of words to be considered aggressive. If you set this, the defaults will not be used at all. If you want to add words, please contribute to the project instead.
+</p>
+<p>
+	For example, in a Finnish channel you might want to replace the default list with Finnish words, e.g.:
+</p>
+<code>var config = { channels: [ { aggressiveWords: ['lyö läpsii hakkaa'] } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].happySmileys"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].happySmileys"><h3>channels[i].happySmileys</h3></a>
+		<p><p>
+	Space separated list of "words" to be considered happy smileys. If you set this, the defaults will not be used at all. If you want to add smileys, please contribute to the project instead.
+</p>
+<code>var config = { channels: [ { happySmileys: ['XD ^^'] } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].unhappySmileys"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].unhappySmileys"><h3>channels[i].unhappySmileys</h3></a>
+		<p><p>
+	Space separated list of "words" to be considered unhappy smileys. If you set this, the defaults will not be used at all. If you want to add smileys, please contribute to the project instead.
+</p>
+<code>var config = { channels: [ { unhappySmileys: [';.-( D:'] } ] };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="channels[i].userConfig"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#channels[i].userConfig"><h3>channels[i].userConfig</h3></a>
+		<p><p>
+	User configuration. This consists of several per-user sections.
+</p>
+
+<h4>Aliases</h4>
+<p>JavaScript array of aliases for this user. They can be space separated strings with simple wildcards (* and ?), or JavaScript RegExp objects, that will be tested against the nickname after it's been converted to lowercase characters.</p>
+<p>For example, to give te user "<em>lietu</em>" the aliases "<em>lietu-</em>", "<em>*lietu</em>" and do a RegEx alias /^lie.*tu$/, you could do the following:</p>
+<code>var config = { channels: [ { userConfig: { lietu: { aliases: ["lietu- *lietu", /^liet.*tu$/] } } } ] };</code>
+<p>
+	... for help with regular expressions, check:
+	<ul>
+		<li><a href="http://www.visibone.com/regular-expressions/">http://www.visibone.com/regular-expressions/</a></li>
+		<li><a href="http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/">http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/</a></li>
+	</ul>
+</p>
+
+<h4>Ignore</h4>
+<p>Not yet implemented</p>
+
+<h4>Picture URL</h4>
+<p>Not yet implemented</p>
+
+<h4>Link</h4>
+<p>Not yet implemented</p>
+
+<h4>Sex</h4>
+<p>Yes please ... ha ha (not really laughing) ... no, really, not yet implemented.</p></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+	<a name="log"></a>
+	<div class="nohighlight">
+		<a href="/configuration.html#log"><h3>log</h3></a>
+		<p><p>
+	This is the logging configuration. The application is logging a lot of things, with different log levels, so you can get a varying level of output depending on your level of interest in what's going on.
+</p>
+<ul>
+	<li>DEBUG: Debugging information, mainly useful for developers.</li>
+	<li>INFO: Information on what's going on, e.g. if you want to know how long it takes to parse some files.</li>
+	<li>MESSAGE: Important messages.</li>
+	<li>WARNING: If the application finds something wrong, that will not cause a critical failure, it will issue a warning.</li>
+	<li>ERROR: Some severe errors might end up here.</li>
+	<li>CRITICAL: Seriously bad errors end up here.</li>
+</ul>
+<p>
+	Generally you'll probably want to enable MESSAGE, WARNING, ERROR and CRITICAL. Maybe when automating generation you might want to only enable ERROR and CRITICAL. You can just leave out the ones you don't want.
+</p>
+<p>
+	You can also define separate destinations for every log level, either with filenames, or the two magic strings <a href="http://en.wikipedia.org/wiki/Standard_streams">STDOUT and STDERR</a>.
+</p>
+<p>
+	For example to log and dump ERROR and CRITICAL levels to STDERR, you could use the following:
+</p>
+<code>var config = { log: { 'ERROR': ['STDERR', 'errors.log'], 'CRITICAL': ['STDERR', 'errors.log'] } };</code></p>
+	</div>
+	<a class="back-to-toc" href="/configuration.html#toc">Back to table of contents</a>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// How many msec to animate the scrolling over
+	var scrollMsec = 200;
+
+	// We'll first bind a click handler to all anchors in the table of contents
+	$('.toc a').click(function(event){
+		// Get the target A element
+		var $a = $('a[name="' + $(this).data('target') + '"]');
+
+		// Animate scrolling the window to the top of it
+		$('html,body').animate({scrollTop: $a.offset().top}, scrollMsec);
+
+		// Get the container element next to the link in the DOM
+		var $container = $a.next();
+
+		// Wait just a moment, then add a class to it's contents for CSS transitions
+		setTimeout(function() {
+			$container.attr('class', 'highlight');
+		}, 100);
+
+		// And remove it in a while
+		setTimeout(function(){
+			$container.attr('class', 'nohighlight');
+		}, 700);
+
+		// Prevent any default actions from this click
+		event.preventDefault();
+		return false;
+	});
+
+	// And then bind clicks to all the "back to table of contents" anchors
+	var $tocTop = $('.toc-target');
+	$('a.back-to-toc').click(function(event){
+
+		// Animate scrolling the window to the top of the TOC
+		$('html,body').animate({scrollTop: $tocTop.offset().top}, scrollMsec);
+
+		// Prevent any default actions from this click
+		event.preventDefault();
+		return false;
+	});
+});
+</script>
+

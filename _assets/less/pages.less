@@ -1,0 +1,32 @@
+
+// Examples -page
+
+ul.examples {
+	> li {
+		list-style: none;
+		margin-bottom: 25px;
+	}
+}
+
+.small-screenshot-trigger {
+	cursor: pointer;
+}
+
+.screenshot-modal {
+    display: none;
+
+	width: @screenshotWidth + 40px;
+	margin: ((@screenshotHeight * 0.7) * -1) 0 0 ((@screenshotWidth + 40px) / 2 * -1);
+
+	.modal-body {
+		height: @screenshotHeight + 20px;
+		max-height: @screenshotHeight + 20px;
+	}
+
+	img {
+		width: @screenshotWidth;
+		height: @screenshotHeight;
+	}
+}
+
+// Documentation / configuration

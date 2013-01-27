@@ -1,0 +1,79 @@
+---
+layout: default
+title: "Home"
+---
+<h2>JavaScript IRC Stats &hellip; IRC Stats Reborn</h2>
+
+<h3>What is JSIS?</h3>
+
+<p>JSIS is short for JavaScript IRC Stats. In short, it's a <a href="http://nodejs.org">Node.js</a> application that generates static web-pages for displaying IRC channel usage statistics.</p>
+<p>If the word "IRC" means nothing to you, it's quite likely this application will be completely useless for you.</p>
+
+<h3>What kind of data does it show?</h3>
+
+<p>JSIS collects and shows many different statistics, below is a list of some.</p>
+
+<ul>
+	<li>Daily activity graph</li>
+	<li>Most active times graph</li>
+	<li>Most active nicks</li>
+	<li>Most active nicks by hour</li>
+	<li>Big numbers (most questions, smileys, etc.)</li>
+	<li>Most used words</li>
+	<li>Smileys</li>
+	<li>Most referenced URLs</li>
+	<li>Latest topics</li>
+</ul>
+
+<h3>Why was JSIS created?</h3>
+
+<p>I grew bored of looking at the old stats generated with pisg, and the other generators. I then thought I'd make my own stats program, with a more modern feel to it, and a more modern looking output.</p>
+
+<p>The code in JSIS should also be somewhat easy to manage, and themeing should be pretty easy, if you get sick of the default theme. There's a widget system for adding content areas, e.g. "Most referenced words" in a somewhat simple way.</p>
+	
+<h3>Where to get it from?</h3>
+	
+<p>The code can be downloaded from the <a href="https://github.com/lietu/jsis">GitHub project page</a>. GitHub also hosts the Wiki, and issue tracking. The JSIS homepage at <a href="http://jsis.name">JSIS.name</a> serves as a place to publish documentation etc. in a better format.</p>
+
+<h3>Is it "ready", or "stable"?</h3>
+	
+<p>Stable and ready are both relative terms. Is it ready? ... probably never will be, as the requirements keep growing as features are finished. Is it stable? If I commit, it doesn't crash for me. There's still a lot more to code, and many features need heavy "fine tuning" to generate better statistics.</p>
+	
+<p>Is it usable? It should be, assuming it happens to support the log format you need.</p>
+	
+<p>Some features that aren't ready:</p>
+<ul>
+	<li>Automatically following nicks through nick changes etc. (something has been done, but doesn't produce great results)</li>
+	<li>Configurable user details (gender, picture, link, etc.)</li>
+	<li>Statistics about nick usage, etc.</li>
+	<li>Rendering some graphic of when top users are active</li>
+	<li>Better lists of foul words, aggressive words, smileys, etc.</li>
+	<li>You can't have too many themes, so more themes should be made. It's easy, trust me like a politician.</li>
+	<li>A few of the widgets have gotten place holders, but the actual implementation is missing, some might require other features before they can be finished</li>
+	<li>Check out for any obviously missing features from pisg, fisg, mIRCStats, etc., try and come up with new ones</li>
+</ul>
+
+<h3>What log formats are supported?</h3>
+	
+<p>At the moment, JSIS supports the default log formats (with optional seconds in timestamps) of:</p>
+<ul>
+	<li>Eggdrop</li>
+	<li>Irssi</li>
+</ul>
+	
+<p>Some clients etc. are pretty dumb and alter the log format based on themes etc., you might find help with cleaning them up to a format that can be parsed in the <a href="https://github.com/lietu/jsis/wiki">Wiki</a>.</p>
+
+<h3>License</h3>
+
+<p>If you've stuck here for this long, you might be interested of the licensing of this awesome creation. Worry not, my friends, this thing is open source.</p>
+
+<p>JSIS itself is released under two licenses: <strong>new BSD</strong>, and <strong>MIT</strong>. You may pick the license that best suits your development needs. The exact text of both licenses are provided with the source code.</p>
+
+<div class="alert-message info">
+	<p>However, you should note that the <a href="http://www.rgraph.net/"><strong>Rgraph graphing library</strong></a> bundled with the default theme does NOT allow free commercial use. If for some reason you'd be using this to graph your company's IRC channel statistics, then you'll have to buy a license for Rgraph, or better yet, create a theme that uses some other graphing library. <a href="http://www.rgraph.net/docs/licensing.html">More information about Rgraph licensing</a>.
+	</p>
+</div>
+
+<h3>Installation and usage</h3>
+
+<p>Please refer to the <a href="/installation.html#nav">documentation</a>.</p>

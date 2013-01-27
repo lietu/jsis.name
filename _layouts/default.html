@@ -1,0 +1,74 @@
+---
+date: "now"
+---
+<!DOCTYPE html><!-- Zomg that's HTML5 .. leet hax -->
+<html lang="en">
+<head>
+	<title>{{ page.title }} - {{ site.title }}</title>
+
+	<!-- Meta tags -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><!-- Why did I put this here again? -->
+	<meta name="description" content="{{ site.meta_description }}">
+	<meta name="keywords" content="{{ site.meta_keywords }}">
+
+	<!--
+	To ensure CSS files are downloaded in parallel,
+	CSS files should always be included before JavaScript
+	-->
+
+	<!-- CSS assets -->
+
+{% css_asset_tag global %}
+- /_assets/bootstrap.min.css
+- /_assets/less/style.less
+{% endcss_asset_tag %}
+
+
+	<!-- JavaScript assets -->
+
+{% javascript_asset_tag global %}
+- /_assets/jquery.min.js
+- /_assets/bootstrap-transition.js
+- /_assets/bootstrap-tooltip.js
+- /_assets/bootstrap-popover.js
+- /_assets/bootstrap-modal.js
+- /_assets/bootstrap-carousel.js
+- /_assets/bootstrap-dropdown.js
+- /_assets/analytics.js
+{% endjavascript_asset_tag %}
+
+</head>
+<body>
+<div id="wrapper">
+	<div id="page" class="container">
+		<header>
+			<div class="content">
+				<h1>JSIS</h1>
+				<p>JavaScript IRC Stats</p>
+				{% include menu.html %}
+			</div>
+		</header>
+
+		<div id="contentArea">
+			<div class="clearfix">
+				<!-- Actual page content -->
+				<div class="span8" id="content">{{ content }}</div>
+				<div id="sidebar" class="span3">{% include sidebar.html %}</div>
+			</div>
+		</div>
+
+		<footer>
+			<p>
+				Copyright &copy; 2013 by Janne Enberg aka. <a href="http://lietu.net/">Lietu</a>.<br/>
+				All Rights Reserved.<br/>
+				Last updated {{ page.date | date: "%Y-%m-%d %H:%M:%S" }}
+			</p>
+		</footer>
+
+
+
+	</div>
+
+
+</body>
+</html>

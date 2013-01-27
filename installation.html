@@ -1,0 +1,48 @@
+---
+layout: default
+title: "Documentation - Installation"
+---
+<h2>Installation guide</h2>
+
+<h3>Requirements</h3>
+
+<p>What does it require for you to be able to run JSIS?</p>
+
+<ul>
+	<li><a href="http://nodejs.org">Node.js</a></li>
+	<li>Node.js modules: ejs, iconv (iconv is actually not strictly necessary)</li>
+	<li>Log files in supported format</li>
+	<li>Some basic skills at running command line tools</li>
+</ul>
+
+<h3>How to use it?</h3>
+
+<ol>
+	<li>
+		Make sure you have installed Node.js and Node Package Manager<br />
+
+		<p>
+			You can probably install them via some installer from the <a href="http://nodejs.org">Node.js homepage</a>, or with <a href="https://github.com/creationix/nvm">Node Version Manager</a>. Ask them for more help.
+		</p>
+	</li>
+	<li>
+		You'll need a place to put the application in, and to run it on .. think of one, and then download the source code from the <a href="https://github.com/lietu/jsis">GitHub project page</a> and put the code there.
+	</li>
+	<li>
+		Install the node modules "ejs" and "iconv".<br />
+		<p>
+			Assuming you've got Node Package Manager installed properly and use BASH, you can open a terminal/whatever to the place you put the files in and run the following:<br />
+			<code>modules="ejs iconv"; for module in $modules; do npm install $module; done</code><br />
+			<strong>NOTE:</strong> iconv most likely needs to be compiled, might have some requirements (such as a compiler), etc. that I cannot, and will not, help you with.
+		</p>
+	</li>
+	<li>
+		Configure JSIS by copying config.example.js to config.js and editing it to taste. Try to read the documentation if something is unclear.
+	</li>
+	<li>
+		Run JSIS with:<br />
+		<code>node jsis.js</code>
+	</li>
+	<li>Good luck! If any issues arise, please report them at the <a href="https://github.com/lietu/jsis/issues">GitHub issue tracker</a> ... if you like it, send thanks to <a href="http://lietu.net">Lietu</a>.</li>
+</ol>
+
