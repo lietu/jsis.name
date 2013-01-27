@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load NVM
-. ~/nvm/nvm.sh
+. ~/.nvm/nvm.sh
 
 # Override PATH
 PATH="${PATH}:~/bin"

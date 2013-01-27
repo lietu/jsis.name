@@ -162,8 +162,8 @@ http.createServer(function(request, response) {
 			}
 		}
 
-		// If trying to break out of the basepath, just show 404
-		if (resolvedPath.substr(0, config.basePath.length) !== config.basePath) {
+		// If trying to break out of the security path, just show 404
+		if (resolvedPath.substr(0, config.securityRoot.length) !== config.securityRoot) {
 			log(config.basePath, resolvedPath);
 			log('Trying to break out of basepath -> 404');
 			resolvedPath = file404;

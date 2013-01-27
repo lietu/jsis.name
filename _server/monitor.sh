@@ -19,7 +19,7 @@ SCRIPT_FILE="lietuserv.js"
 EMAIL_RECIPIENT="janne.enberg@lietu.net"
 
 # Email subject
-EMAIL_SUBJECT="${SCRIPT_FILE} crashed on $(uname -n)"
+EMAIL_SUBJECT="JSIS.name ${SCRIPT_FILE} crashed on $(uname -n)"
 
 
 #
