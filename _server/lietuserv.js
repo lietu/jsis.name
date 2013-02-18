@@ -24,6 +24,43 @@ var log = function() {
 	console.log(arguments);
 };
 
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/**
+ * Get an RFC 2822 -compatible date for Last-Modified
+ */
+var getRFC2822Date = function(d) {
+
+	// If no date given, create a new one
+	d = d || new Date();
+
+	// Return the formatted string:
+	// Tue, 15 Nov 1994 12:45:26 GMT
+	return [
+		days[ d.getUTCDay() ] + ',',
+
+		d.getUTCDate() < 10 ? '0' : '' + d.getUTCDate(),
+
+		months[d.getUTCMonth()],
+
+		d.getUTCFullYear(),
+
+		// HH:MM:SS
+		(
+			(d.getUTCHours() < 10 ? '0' : '') + d.getUTCHours()
+				+ ':' +
+			(d.getUTCMinutes() < 10 ? '0' : '') + d.getUTCMinutes()
+				+ ':' +
+			(d.getUTCSeconds() < 10 ? '0' : '') + d.getUTCSeconds()
+		)
+		,
+		'GMT'
+	].join(' ');
+};
+
+
 /**
  * Handle passing responses, with optional gzip encoding
  */
@@ -63,7 +100,7 @@ var sendResponse = function(request, response, status, headers, responseContent)
 	// Add caching headers if it looks like it'll be fine to do so
 	if (200 === status || 404 === status) {
 		log('Adding caching headers for ' + status + ' response');
-		headers['Cache-Control'] = 'public, max-age=' + config.maxAge;
+		headers['Cache-Control'] = 'public, max-age=' + (config.maxAge / 1000) ;
 	}
 
 	// If we want to gzip, do it
@@ -98,7 +135,7 @@ var serveFile = function(request, response, status, filePath) {
 	fs.stat(filePath, function(err, statData) {
 		if (err) throw err;
 
-		headers['Last-Modified'] = String(statData.mtime);
+		headers['Last-Modified'] = getRFC2822Date(statData.mtime);
 
 		if (request.headers['if-modified-since']) {
 			if (new Date(request.headers['if-modified-since']) >= statData.mtime) {
