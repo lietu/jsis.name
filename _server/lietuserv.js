@@ -41,7 +41,7 @@ var getRFC2822Date = function(d) {
 	return [
 		days[ d.getUTCDay() ] + ',',
 
-		d.getUTCDate() < 10 ? '0' : '' + d.getUTCDate(),
+		(d.getUTCDate() < 10 ? '0' : '') + d.getUTCDate(),
 
 		months[d.getUTCMonth()],
 
