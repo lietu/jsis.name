@@ -21,6 +21,9 @@ EMAIL_RECIPIENT="janne.enberg@lietu.net"
 # Email subject
 EMAIL_SUBJECT="JSIS.name ${SCRIPT_FILE} crashed on $(uname -n)"
 
+# Error log file
+ERROR_LOG="err.lietuserv"
+
 
 #
 # Script logic
@@ -46,8 +49,10 @@ while [ true ]; do
 	# If not OK, then try to start
 	if [ "${ok}" -eq 0 ]; then
 
+		errorlog=$(cat "${ERROR_LOG}")
+
 		# Start node in the background
-		"${NODE}" "${SCRIPT_FILE}" &
+		"${NODE}" "${SCRIPT_FILE}" 2>"${ERROR_LOG}" &
 
 		# Catch PID
 		pid=$!
@@ -59,7 +64,11 @@ while [ true ]; do
 		email_message="Node.js service ${SCRIPT_FILE} seems to have crashed on host. Restarting...
 
 Uptime:
-$(uptime)"
+$(uptime)
+
+Error log:
+${errorlog}
+"
 
 		# Send it via email
 		echo "${email_message}" | mail -s"${EMAIL_SUBJECT}" "${EMAIL_RECIPIENT}"

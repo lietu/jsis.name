@@ -41,7 +41,7 @@ var getRFC2822Date = function(d) {
 	return [
 		days[ d.getUTCDay() ] + ',',
 
-		(d.getUTCDate() < 10 ? '0' : '') + d.getUTCDate(),
+		d.getUTCDate() < 10 ? '0' : '' + d.getUTCDate(),
 
 		months[d.getUTCMonth()],
 
@@ -58,6 +58,38 @@ var getRFC2822Date = function(d) {
 		,
 		'GMT'
 	].join(' ');
+};
+
+/**
+ * Formats "accept-encoding" to "Accept-Encoding" for better readability
+ */
+var formatHeader = function(header) {
+	var parts = header.split('-');
+
+	for (var i = 0, count = parts.length; i < count; ++i) {
+		parts[i] = parts[i].substr(0, 1).toUpperCase() + parts[i].substr(1);
+	}
+
+	return parts.join('-');
+};
+
+/**
+ * Log errors in a useful enough manner
+ */
+var handleError = function(err, request) {
+	if (request) {
+		console.error('Request from ' + request.socket.remoteAddress + ' caught an exception!');
+		console.error(request.method + ' ' + request.url + ' HTTP/' + request.httpVersion);
+		
+		for (var header in request.headers) {
+			console.error(formatHeader(header) + ': ' + request.headers[header]);
+		}
+		console.error();
+	}
+	console.error('The error was: ' + err);
+	console.error();
+	console.trace();
+	process.exit(1);
 };
 
 
@@ -81,7 +113,7 @@ var sendResponse = function(request, response, status, headers, responseContent)
 
 	// Function to finally write the headers and content to the response
 	var send = function(err, content) {
-		if (err) throw err;
+		if (err) handleError(err, request);
 
 		// Add content-length, Flash seems to require this
 		headers['Content-Length'] = content.length;
@@ -133,7 +165,7 @@ var serveFile = function(request, response, status, filePath) {
 
 	// Do a stat() on the file to figure out modified time
 	fs.stat(filePath, function(err, statData) {
-		if (err) throw err;
+		if (err) handleError(err, request);
 
 		headers['Last-Modified'] = getRFC2822Date(statData.mtime);
 
@@ -150,7 +182,7 @@ var serveFile = function(request, response, status, filePath) {
 		log('Reading file...');
 		// Read the file
 		fs.readFile(filePath, function(err, data) {
-			if (err) throw err;
+			if (err) handleError(err, request);
 
 			// Create an E-Tag
 			headers['ETag'] = statData.size + '-' + Date.parse(statData.mtime);
@@ -195,7 +227,7 @@ http.createServer(function(request, response) {
 				resolvedPath = file404;
 				status = 404;
 			} else {
-				throw err;
+				handleError(err, request);
 			}
 		}
 
@@ -216,4 +248,3 @@ http.createServer(function(request, response) {
 
 
 console.log('Listening on port ' + config.port);
-
