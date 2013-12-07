@@ -28,6 +28,8 @@ var log = function() {
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+var serveUrl, serveFile, sendResponse;
+
 /**
  * Get an RFC 2822 -compatible date for Last-Modified
  */
@@ -80,7 +82,7 @@ var handleError = function(err, request) {
 	if (request) {
 		console.error('Request from ' + request.socket.remoteAddress + ' caught an exception!');
 		console.error(request.method + ' ' + request.url + ' HTTP/' + request.httpVersion);
-		
+
 		for (var header in request.headers) {
 			console.error(formatHeader(header) + ': ' + request.headers[header]);
 		}
@@ -96,7 +98,7 @@ var handleError = function(err, request) {
 /**
  * Handle passing responses, with optional gzip encoding
  */
-var sendResponse = function(request, response, status, headers, responseContent) {
+sendResponse = function(request, response, status, headers, responseContent) {
 
 	// Determine if we can use gzip compression for this request
 	var useGzip = false;
@@ -149,7 +151,7 @@ var sendResponse = function(request, response, status, headers, responseContent)
 };
 
 // Serve a static file
-var serveFile = function(request, response, status, filePath) {
+serveFile = function(request, response, status, filePath, url) {
 	log('Serving file ' + filePath + ' with status ' + status);
 
 	// Build some headers
@@ -166,6 +168,12 @@ var serveFile = function(request, response, status, filePath) {
 	// Do a stat() on the file to figure out modified time
 	fs.stat(filePath, function(err, statData) {
 		if (err) handleError(err, request);
+
+		if (statData.isDirectory()) {
+			log('Whoops, ' + filePath + ' looks like a directory.');
+			serveUrl(request, response, url + '/');
+			return;
+		}
 
 		headers['Last-Modified'] = getRFC2822Date(statData.mtime);
 
@@ -207,16 +215,16 @@ var file404 = config.basePath + '/404.html';
 
 // fs.realpath() -cache
 var realPathCache = {};
-http.createServer(function(request, response) {
+
+serveUrl = function(request, response, url) {
+
 	// Folders -> index.html
-	if (request.url.substr(-1) === '/') {
-		request.url += 'index.html';
+	if (url.substr(-1) === '/') {
+		url += 'index.html';
 	}
 
 	// Figure out the requested file
-	var requestPath = config.basePath + request.url;
-
-	log('New request for ' + request.url);
+	var requestPath = config.basePath + url;
 
 	// Check that the path isn't an evil one
 	fs.realpath(requestPath, realPathCache, function(err, resolvedPath) {
@@ -240,10 +248,16 @@ http.createServer(function(request, response) {
 		}
 
 		// Show whatever file we're going to show now
-		serveFile(request, response, status, resolvedPath);
+		serveFile(request, response, status, resolvedPath, url);
 
 	});
 
+};
+
+http.createServer(function(request, response) {
+	log('New request for ' + request.url);
+	
+	serveUrl(request, response, request.url);
 }).listen(config.port);
 
 
