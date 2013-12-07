@@ -103,7 +103,7 @@ sendResponse = function(request, response, status, headers, responseContent) {
 	// Determine if we can use gzip compression for this request
 	var useGzip = false;
 	headers['Vary'] = 'Accept-Encoding';
-	if (responseContent !== undefined && request.headers['accept-encoding'] && headers['Content-Type'].match(config.gzipMime)) {
+	if (responseContent !== undefined && request.headers['accept-encoding'] && headers['Content-Type'] && headers['Content-Type'].match(config.gzipMime)) {
 		if (request.headers['accept-encoding'].match(/deflate/)) {
 			log('Using deflate encoding');
 			useGzip = 'deflate';
