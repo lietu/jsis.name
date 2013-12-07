@@ -151,6 +151,7 @@ sendResponse = function(request, response, status, headers, responseContent) {
 };
 
 redirect = function(request, response, uri, status) {
+	var headers = {};
 	headers['Location'] = uri;
 	sendResponse(request, response, status, headers, '');
 };
