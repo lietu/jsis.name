@@ -28,7 +28,7 @@ var log = function() {
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-var serveUrl, serveFile, sendResponse;
+var serveUrl, serveFile, sendResponse, redirect;
 
 /**
  * Get an RFC 2822 -compatible date for Last-Modified
@@ -150,6 +150,11 @@ sendResponse = function(request, response, status, headers, responseContent) {
 	}
 };
 
+redirect = function(request, response, uri, status) {
+	headers['Location'] = uri;
+	sendResponse(request, response, status, headers, '');
+};
+
 // Serve a static file
 serveFile = function(request, response, status, filePath, url) {
 	log('Serving file ' + filePath + ' with status ' + status);
@@ -171,7 +176,7 @@ serveFile = function(request, response, status, filePath, url) {
 
 		if (statData.isDirectory()) {
 			log('Whoops, ' + filePath + ' looks like a directory.');
-			serveUrl(request, response, url + '/');
+			redirect(request, response, url + '/', 301);
 			return;
 		}
 
@@ -256,7 +261,7 @@ serveUrl = function(request, response, url) {
 
 http.createServer(function(request, response) {
 	log('New request for ' + request.url);
-	
+
 	serveUrl(request, response, request.url);
 }).listen(config.port);
 
